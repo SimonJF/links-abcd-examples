@@ -1,0 +1,15 @@
+fun go() {
+  try {
+    var s = fork (fun (t) {
+      cancel(t)
+    });
+    var (res, _) = receive(s);
+    res
+  } as (x) in {
+    print("Result: " ^^ x)
+  } otherwise {
+    print("Exception")
+  }
+}
+
+go()

@@ -1,0 +1,17 @@
+fun go() {
+  var ap = new();
+  try {
+    var s = fork (fun(t) {
+      var a = accept(ap);
+      var clos = linfun() { send(5, a) };
+      raise;
+      ignore(send(clos, t))
+    });
+    var b = request(ap);
+    ignore(receive(b));
+    cancel(s)
+  } as (x) in { print("Success")
+  } otherwise { print("Exception") }
+}
+
+go()

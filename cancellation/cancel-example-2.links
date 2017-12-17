@@ -1,0 +1,17 @@
+fun go() {
+  var ap = new(); var sync = new();
+  try {
+    var s = fork (fun(t) {
+      var carriedC = request(ap);
+      var _ = send(carriedC, t);
+      ignore(request(sync))
+      });
+    var carriedP = accept(ap);
+    ignore(accept(sync));
+    cancel(s);
+    var (res, _) = receive(carriedP); res
+  } as (x) in { print("Success: " ^^ x)
+  } otherwise { print("Exception") }
+}
+
+go()
